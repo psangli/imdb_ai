@@ -1,13 +1,16 @@
 import csv
 import re
 import random
+import pandas as pd
+import math
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 
 with open('../movie_metadata.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     i = 0
     movies = []
     for row in reader:
-
         #initializing variables
 
         duration = row['duration']
@@ -138,6 +141,8 @@ with open('../movie_metadata.csv') as csvfile:
         elif (content_rating == 'G'):
             G = 1
 
+        imdb_score_int = int(math.floor(float(imdb_score)))
+
 
         movie = (duration, director_facebook_likes,
                  actor_3_facebook_likes,
@@ -147,7 +152,7 @@ with open('../movie_metadata.csv') as csvfile:
                  budget,
                  title_year,
                  actor_2_facebook_likes,
-                 imdb_score,
+                 imdb_score_int,
                  aspect_ratio,
                  Action,
                  Adventure,
@@ -176,12 +181,81 @@ with open('../movie_metadata.csv') as csvfile:
 
         movies.append(movie)
 
+    attribute = ('duration', 'director_facebook_likes',
+                 'actor_3_facebook_likes',
+                 'actor_1_facebook_likes',
+                 'cast_total_facebook_likes',
+                 'facenumber_in_poster',
+                 'budget',
+                 'title_year',
+                 'actor_2_facebook_likes',
+                 'imdb_score_int',
+                 'aspect_ratio',
+                 'Action',
+                 'Adventure',
+                 'Animation',
+                 'Biography',
+                 'Comedy',
+                 'Crime',
+                 'Documentary',
+                 'Drama',
+                 'Family',
+                 'Fantasy',
+                 'History',
+                 'Horror',
+                 'Musical',
+                 'Mystery',
+                 'Romance',
+                 'SciFi',
+                 'Sport',
+                 'Thriller',
+                 'War',
+                 'Western',
+                 'PG13',
+                 'PG',
+                 'G',
+                 'R')
+
+    attributeList = ['duration', 'director_facebook_likes',
+                 'actor_3_facebook_likes',
+                 'actor_1_facebook_likes',
+                 'cast_total_facebook_likes',
+                 'facenumber_in_poster',
+                 'budget',
+                 'title_year',
+                 'actor_2_facebook_likes',
+                 'imdb_score_int',
+                 'aspect_ratio',
+                 'Action',
+                 'Adventure',
+                 'Animation',
+                 'Biography',
+                 'Comedy',
+                 'Crime',
+                 'Documentary',
+                 'Drama',
+                 'Family',
+                 'Fantasy',
+                 'History',
+                 'Horror',
+                 'Musical',
+                 'Mystery',
+                 'Romance',
+                 'SciFi',
+                 'Sport',
+                 'Thriller',
+                 'War',
+                 'Western',
+                 'PG13',
+                 'PG',
+                 'G',
+                 'R']
+
     testing = []
     training = []
     i = 0
 
     #spliting into training and testing set
-    print len(movies)
     for i in range(len(movies)):
         movie = random.choice(movies)
         movies.remove(movie)
@@ -190,5 +264,24 @@ with open('../movie_metadata.csv') as csvfile:
         else:
             training.append(movie)
 
-    print(len(testing))
-    print(len(training))
+    df = pd.DataFrame(training,columns=attribute)
+
+    attribute
+
+    df.head()
+
+    features = df.columns[:27]
+
+    print(training)
+
+    y = pd.factorize(training[attribute.index('imdb_score_int')])[0]
+
+    y
+
+    clf = RandomForestClassifier(n_jobs=2, random_state=0)
+
+    clf.fit(training[features], y)
+
+
+
+
