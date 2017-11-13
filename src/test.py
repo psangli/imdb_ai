@@ -4,6 +4,7 @@ import random
 import pandas as pd
 import math
 import numpy as np
+from numpy import genfromtxt
 from sklearn.ensemble import RandomForestClassifier
 
 with open('../movie_metadata.csv') as csvfile:
@@ -11,7 +12,7 @@ with open('../movie_metadata.csv') as csvfile:
     i = 0
     movies = []
     for row in reader:
-        #initializing variables
+        # initializing variables
 
         duration = row['duration']
         director_facebook_likes = row['director_facebook_likes']
@@ -27,24 +28,24 @@ with open('../movie_metadata.csv') as csvfile:
         imdb_score = row['imdb_score']
         aspect_ratio = row['aspect_ratio']
 
-        #omitting rows with no data
-        if(duration == ''
-           or director_facebook_likes == ''
-           or actor_3_facebook_likes == ''
-           or actor_1_facebook_likes == ''
-           or genres == ''
-           or cast_total_facebook_likes == ''
-           or facenumber_in_poster == ''
-           or content_rating == ''
-           or budget == ''
-           or title_year == ''
-           or actor_2_facebook_likes == ''
-           or imdb_score == ''
-           or aspect_ratio == ''):
+        # omitting rows with no data
+        if (duration == ''
+            or director_facebook_likes == ''
+            or actor_3_facebook_likes == ''
+            or actor_1_facebook_likes == ''
+            or genres == ''
+            or cast_total_facebook_likes == ''
+            or facenumber_in_poster == ''
+            or content_rating == ''
+            or budget == ''
+            or title_year == ''
+            or actor_2_facebook_likes == ''
+            or imdb_score == ''
+            or aspect_ratio == ''):
             continue
         gen = re.split('\|', genres)
 
-        #Initialize the genres
+        # Initialize the genres
         Action = 0
         Adventure = 0
         Animation = 0
@@ -66,7 +67,7 @@ with open('../movie_metadata.csv') as csvfile:
         War = 0
         Western = 0
 
-        if('Action' in gen):
+        if ('Action' in gen):
             Action = 1
 
         if ('Adventure' in gen):
@@ -126,7 +127,7 @@ with open('../movie_metadata.csv') as csvfile:
         if ('Western' in gen):
             Western = 1
 
-        #Initialize Ratings
+        # Initialize Ratings
         PG13 = 0
         PG = 0
         G = 0
@@ -259,7 +260,7 @@ with open('../movie_metadata.csv') as csvfile:
     for i in range(len(movies)):
         movie = random.choice(movies)
         movies.remove(movie)
-        if(i % 10 == 0):
+        if (i % 10 == 0):
             testing.append(movie)
         else:
             training.append(movie)
