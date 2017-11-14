@@ -32,16 +32,16 @@ for item in uniqueGenres:
 #     my_data = my_data.join(dat)
 
 R = my_data[my_data['content_rating'] == 'R']
-R = my_data[my_data['content_rating'] == 'PG']
-R = my_data[my_data['content_rating'] == 'PG-13']
-R = my_data[my_data['content_rating'] == 'G']
+PG = my_data[my_data['content_rating'] == 'PG']
+PG13 = my_data[my_data['content_rating'] == 'PG-13']
+G = my_data[my_data['content_rating'] == 'G']
 
 print(R)
 
 R.to_csv('R.csv', sep=',')
-R.to_csv('PG.csv', sep=',')
-R.to_csv('PG-13.csv', sep=',')
-R.to_csv('G.csv', sep=',')
+PG.to_csv('PG.csv', sep=',')
+PG13.to_csv('PG-13.csv', sep=',')
+G.to_csv('G.csv', sep=',')
 
 my_data = my_data.apply(pd.to_numeric, errors='coerce')
 my_data = my_data.dropna(axis=1, how='all')
