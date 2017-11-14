@@ -19,20 +19,32 @@ for item in uniqueGenres:
     dat = pd.DataFrame({item: data})
     my_data = my_data.join(dat)
 
-uniqueRatings = ['PG-13', 'PG', 'G', 'R']
+# uniqueRatings = ['PG-13', 'PG', 'G', 'R']
+#
+# for item in uniqueRatings:
+#     data = []
+#     for rating in my_data['content_rating']:
+#         if(rating == item):
+#             data.append(1)
+#         else:
+#             data.append(0)
+#     dat = pd.DataFrame({item: data})
+#     my_data = my_data.join(dat)
 
-for item in uniqueRatings:
-    data = []
-    for rating in my_data['content_rating']:
-        if(rating == item):
-            data.append(1)
-        else:
-            data.append(0)
-    dat = pd.DataFrame({item: data})
-    my_data = my_data.join(dat)
+R = my_data[my_data['content_rating'] == 'R']
+R = my_data[my_data['content_rating'] == 'PG']
+R = my_data[my_data['content_rating'] == 'PG-13']
+R = my_data[my_data['content_rating'] == 'G']
+
+print(R)
+
+R.to_csv('R.csv', sep=',')
+R.to_csv('PG.csv', sep=',')
+R.to_csv('PG-13.csv', sep=',')
+R.to_csv('G.csv', sep=',')
 
 my_data = my_data.apply(pd.to_numeric, errors='coerce')
 my_data = my_data.dropna(axis=1, how='all')
 my_data = my_data.dropna(axis=0, how='any')
 
-print(my_data)
+# print(my_data)
